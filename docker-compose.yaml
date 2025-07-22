@@ -23,7 +23,7 @@ services:
         max-size: "10m"
         max-file: "3"
   kafka1:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.9.1
     hostname: kafka1
     container_name: kafka1
     restart: unless-stopped
@@ -60,7 +60,7 @@ services:
         max-file: "3"
 
   init-kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.9.1
     container_name: init-kafka
     depends_on:
       kafka1:

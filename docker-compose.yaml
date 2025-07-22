@@ -9,6 +9,13 @@ services:
       - ./assets:/data/assets
     command: -config ./config.yaml
     restart: unless-stopped
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      init-kafka:
+        condition: service_completed_successfully
+      streamer:
+        condition: service_started
     ports:
       - "19029:8080"
     logging:

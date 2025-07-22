@@ -6,6 +6,7 @@ RUN make build
 
 FROM cgr.dev/chainguard/glibc-dynamic AS indexer
 COPY --from=build /code/indexer /bin/
+COPY --from=build /code/docs /data/docs
 
 VOLUME /data
 WORKDIR /data

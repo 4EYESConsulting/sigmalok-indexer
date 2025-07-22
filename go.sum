@@ -170,8 +170,8 @@ github.com/schollz/progressbar/v3 v3.18.0 h1:uXdoHABRFmNIjUfte/Ex7WtuyVslrw2wVPQ
 github.com/schollz/progressbar/v3 v3.18.0/go.mod h1:IsO3lpbaGuzh8zIMzgY3+J8l4C8GjO0Y9S69eFvNsec=
 github.com/segmentio/kafka-go v0.4.48 h1:9jyu9CWK4W5W+SroCe8EffbrRZVqAOkuaLd/ApID4Vs=
 github.com/segmentio/kafka-go v0.4.48/go.mod h1:HjF6XbOKh0Pjlkr5GVZxt6CsjjwnmhVOfURM5KMd8qg=
-github.com/sigmaspace-io/ergo-lib-go v0.26.1-0.20241115225441-223b24b0cb75 h1:4s0+PuyTfC2JALvBjq2gkuZhrxjM4a4EhmBwQibUBjY=
-github.com/sigmaspace-io/ergo-lib-go v0.26.1-0.20241115225441-223b24b0cb75/go.mod h1:82z8STqgxDwSVEJ0cCJqU5uXI4New0cVPXSZbkqbf6I=
+github.com/sigmaspace-io/ergo-lib-go v0.28.0 h1:TDucZ4HfGxdIJAF8Si5aX/Fy0lcWfaOX0cobFExJQ9Y=
+github.com/sigmaspace-io/ergo-lib-go v0.28.0/go.mod h1:82z8STqgxDwSVEJ0cCJqU5uXI4New0cVPXSZbkqbf6I=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

@@ -1,0 +1,16 @@
+.git/
+.github/
+.mainnet/
+.preview/
+.preprod/
+.data/
+.venv/
+.idea/
+config.testnet.yaml
+config.mainnet.yaml
+config.example.yaml
+config.yaml
+Dockerfile
+indexer
+README.md
+NEXT.md

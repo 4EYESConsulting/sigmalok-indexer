@@ -1,0 +1,48 @@
+storage:
+  dir: "./.mainnet"
+
+kafka:
+  brokers:
+    - "streamer:19091"
+  groupId: "sigmalok-indexer"
+  minBytes: 1
+  maxBytes: 1048576
+  blockTopic: "blocks_topic"
+  txTopic: "tx_topic"
+  mempoolTopic: "mempool_topic"
+  maxStragglersLookback: 10000
+
+indexer:
+  interceptHeight: 1570290
+  mempoolTxExpirationTime: 10m
+  restartThreshold: 3
+  restartTimeWindow: 10m
+  allowedLag: 0
+  allowedBuffer: 0
+
+server:
+  listenAddress: "0.0.0.0"
+  listenPort: 8080
+  enableDebug: true
+  maxLimit: 100
+
+api:
+  nodeURL: ""
+  nodeAPIKey: ""
+
+contract:
+  ergotree: ""
+
+logging:
+  level: "info"
+  log_discord_webook_url: "Your Discord webhook URL"
+  notification_discord_webhook_url: "Your notification webhook URL"
+  explorer_base_uri: ""
+  log_file_name: "mainnet.log"
+  log_directory: "assets/logs"
+  max_log_file_size: 100 # MBs
+  max_backups: 3
+  max_age: 30 # days
+
+profile: "mainnet"
+network: "mainnet"

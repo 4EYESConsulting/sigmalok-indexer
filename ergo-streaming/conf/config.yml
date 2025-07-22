@@ -1,0 +1,15 @@
+node_addr: https://node.phoenixfi.app
+http_client_timeout_duration_secs: 5
+#chain_sync_starting_height: 1563508
+chain_sync_starting_height: 1570290
+log4rs_yaml_path: /usr/conf/log4rs.yaml
+chain_cache_db_path: /data/chain
+mempool_cache_db_path: /data/mempool
+kafka_address: "kafka1:9092"
+blocks_topic: "blocks_topic"
+tx_topic: "tx_topic"
+mempool_topic: "mempool_topic"
+mempool_sync_interval_ms: 100
+chain_sync_batch_size: 50
+chain_sync_chunk_size: 10
+chain_sync_throttle_ms: 100

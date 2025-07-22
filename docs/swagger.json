@@ -1,0 +1,834 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Token balance information",
+        "title": "SigmaLok Indexer API",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/contracts": {
+            "get": {
+                "description": "Retrieves all contracts with pagination support",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get All Contracts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to return (default 100)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to skip (default 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of contracts successfully retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.ContractResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/benefactor/{benefactor}": {
+            "get": {
+                "description": "Retrieves all contracts where the specified address is the benefactor with pagination support",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get Contracts by Benefactor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Benefactor's Ergo address",
+                        "name": "benefactor",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to return (default 100)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to skip (default 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of contracts successfully retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.ContractResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/creator/{creator}": {
+            "get": {
+                "description": "Retrieves all contracts created by a specific address with pagination support",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get Contracts by Creator",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Creator's Ergo address",
+                        "name": "creator",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to return (default 100)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to skip (default 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of contracts successfully retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.ContractResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/deadline/{deadline}": {
+            "get": {
+                "description": "Retrieves all contracts with deadline before or after the specified block height",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get Contracts by Deadline",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Block height deadline",
+                        "name": "deadline",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "If true, returns contracts after deadline instead (default false)",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to return (default 100)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to skip (default 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of contracts successfully retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.ContractResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/designates": {
+            "post": {
+                "description": "Retrieves all contracts that have any of the specified designate addresses",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get Contracts by Designate Addresses",
+                "parameters": [
+                    {
+                        "description": "List of designate addresses to search for",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "description": "Request body for searching contracts by designate addresses",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to return (default 100)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to skip (default 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of contracts successfully retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.ContractResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/keys": {
+            "post": {
+                "description": "Retrieves all contracts that have any of the specified keys",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get Contracts by Keys",
+                "parameters": [
+                    {
+                        "description": "List of key IDs to search for",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "description": "Request body for searching contracts by keys",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to return (default 100)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of contracts to skip (default 0)",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of contracts successfully retrieved",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.ContractResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/{singleton}": {
+            "get": {
+                "description": "Retrieves a contract and its associated data by singleton identifier",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contracts"
+                ],
+                "summary": "Get Contract by Singleton",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Singleton identifier of the contract",
+                        "name": "singleton",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contract details successfully retrieved",
+                        "schema": {
+                            "$ref": "#/definitions/api.ContractResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Contract not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/healthcheck": {
+            "get": {
+                "description": "Returns 200 only when all readers are alive, lastProcessedHeight+cfg.AllowedLag ≥ tipHeight, and pendingDownstream \u003c cfg.AllowedBuffer",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Health Check",
+                "responses": {
+                    "200": {
+                        "description": "Service is ready",
+                        "schema": {
+                            "$ref": "#/definitions/api.ReadinessResponse"
+                        }
+                    },
+                    "503": {
+                        "description": "Service is not ready",
+                        "schema": {
+                            "$ref": "#/definitions/api.ReadinessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/statistics": {
+            "get": {
+                "description": "Retrieves global statistics about contracts and locked assets",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "statistics"
+                ],
+                "summary": "Get Global Statistics",
+                "responses": {
+                    "200": {
+                        "description": "Statistics successfully retrieved",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/statistics/claimable-erg/{height}": {
+            "get": {
+                "description": "Retrieves the total amount of ERG that will be claimable after a specific block height",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "statistics"
+                ],
+                "summary": "Get Total Claimable ERG",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Block height to check claimable ERG",
+                        "name": "height",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Total claimable ERG successfully retrieved",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.ContractResponse": {
+            "description": "Contract response object containing all contract details and associated transactions",
+            "type": "object",
+            "properties": {
+                "benefactor": {
+                    "description": "Address of the contract benefactor",
+                    "type": "string"
+                },
+                "block_height": {
+                    "description": "Block height where the contract was created",
+                    "type": "integer"
+                },
+                "creator": {
+                    "description": "Address of the contract creator",
+                    "type": "string"
+                },
+                "deadline": {
+                    "description": "Block height deadline for the contract",
+                    "type": "integer"
+                },
+                "designates": {
+                    "description": "List of designate addresses and their block heights",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.DesignateInfo"
+                    }
+                },
+                "fee_amount": {
+                    "description": "Amount of the fee",
+                    "type": "integer"
+                },
+                "fee_hash": {
+                    "description": "Hash of the fee parameters",
+                    "type": "string"
+                },
+                "funding_txs": {
+                    "description": "List of funding transactions",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.FundingTxInfo"
+                    }
+                },
+                "genesis_confirmed": {
+                    "description": "Whether the genesis transaction is confirmed",
+                    "type": "boolean"
+                },
+                "genesis_erg": {
+                    "description": "Initial ERG amount in the contract",
+                    "type": "integer"
+                },
+                "genesis_tx": {
+                    "description": "Transaction ID of the genesis transaction",
+                    "type": "string"
+                },
+                "key": {
+                    "description": "Optional key information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.KeyInfo"
+                        }
+                    ]
+                },
+                "mint_txs": {
+                    "description": "List of mint transactions",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.MintTxInfo"
+                    }
+                },
+                "name": {
+                    "description": "Optional name of the contract",
+                    "type": "string"
+                },
+                "oracle_is_greater_than": {
+                    "description": "Optional flag indicating if oracle comparison should be greater than",
+                    "type": "boolean"
+                },
+                "oracle_nft": {
+                    "description": "Optional oracle NFT token ID",
+                    "type": "string"
+                },
+                "oracle_value": {
+                    "description": "Optional oracle value to compare against",
+                    "type": "integer"
+                },
+                "redeem_txs": {
+                    "description": "List of redeem transactions",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.RedeemTxInfo"
+                    }
+                },
+                "singleton": {
+                    "description": "Unique identifier of the contract",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "Current value of the contract including ERG and tokens",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.ContractValue"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.ContractValue": {
+            "description": "Current value of the contract including ERG and tokens",
+            "type": "object",
+            "properties": {
+                "erg": {
+                    "description": "ERG value information",
+                    "type": "object",
+                    "properties": {
+                        "confirmed": {
+                            "description": "Confirmed ERG amount",
+                            "type": "integer"
+                        },
+                        "unconfirmed": {
+                            "description": "Unconfirmed ERG amount",
+                            "type": "integer"
+                        }
+                    }
+                },
+                "tokens": {
+                    "description": "Token value information",
+                    "type": "object",
+                    "properties": {
+                        "confirmed": {
+                            "description": "Map of confirmed token balances",
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/api.TokenBalance"
+                            }
+                        },
+                        "unconfirmed": {
+                            "description": "Map of unconfirmed token balances",
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/api.TokenBalance"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api.DesignateInfo": {
+            "description": "Designate address information with block height",
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "Ergo address of the designate",
+                    "type": "string"
+                },
+                "block_height": {
+                    "description": "Block height when the designate was added",
+                    "type": "integer"
+                }
+            }
+        },
+        "api.FundingTxInfo": {
+            "description": "Funding transaction information",
+            "type": "object",
+            "properties": {
+                "block_height": {
+                    "description": "Block height of the transaction",
+                    "type": "integer"
+                },
+                "erg_delta": {
+                    "description": "Change in ERG amount",
+                    "type": "integer"
+                },
+                "tx": {
+                    "description": "Transaction ID",
+                    "type": "string"
+                }
+            }
+        },
+        "api.KeyInfo": {
+            "description": "Key information including ID and amount",
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "Amount associated with the key",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "Unique identifier of the key",
+                    "type": "string"
+                }
+            }
+        },
+        "api.MintTxInfo": {
+            "description": "Mint transaction information",
+            "type": "object",
+            "properties": {
+                "block_height": {
+                    "description": "Block height of the transaction",
+                    "type": "integer"
+                },
+                "confirmed": {
+                    "description": "Whether the transaction is confirmed",
+                    "type": "boolean"
+                },
+                "tx": {
+                    "description": "Transaction ID",
+                    "type": "string"
+                }
+            }
+        },
+        "api.ReadinessResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "ready": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "api.RedeemTxInfo": {
+            "description": "Redeem transaction information",
+            "type": "object",
+            "properties": {
+                "block_height": {
+                    "description": "Block height of the transaction",
+                    "type": "integer"
+                },
+                "confirmed": {
+                    "description": "Whether the transaction is confirmed",
+                    "type": "boolean"
+                },
+                "recipient_address": {
+                    "description": "Address receiving the redeemed assets",
+                    "type": "string"
+                },
+                "tx": {
+                    "description": "Transaction ID",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of redemption",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.RedeemType"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.RedeemType": {
+            "description": "Type of redemption (deadline_reached, oracle_redeem, or designate_redeem)",
+            "type": "string",
+            "enum": [
+                "deadline_reached",
+                "oracle_redeem",
+                "designate_redeem"
+            ],
+            "x-enum-varnames": [
+                "RedeemTypeDeadlineReached",
+                "RedeemTypeOracleRedeem",
+                "RedeemTypeDesignateRedeem"
+            ]
+        },
+        "api.TokenBalance": {
+            "description": "Token balance information",
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "Token amount",
+                    "type": "integer"
+                },
+                "tokenId": {
+                    "description": "Token identifier",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "description": "Contract Queries",
+            "name": "contracts"
+        },
+        {
+            "description": "Global statistics and metrics about contracts and locked assets",
+            "name": "statistics"
+        },
+        {
+            "description": "System status and health monitoring endpoints",
+            "name": "system"
+        }
+    ]
+}

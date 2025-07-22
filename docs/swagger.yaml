@@ -1,0 +1,569 @@
+basePath: /
+definitions:
+  api.ContractResponse:
+    description: Contract response object containing all contract details and associated
+      transactions
+    properties:
+      benefactor:
+        description: Address of the contract benefactor
+        type: string
+      block_height:
+        description: Block height where the contract was created
+        type: integer
+      creator:
+        description: Address of the contract creator
+        type: string
+      deadline:
+        description: Block height deadline for the contract
+        type: integer
+      designates:
+        description: List of designate addresses and their block heights
+        items:
+          $ref: '#/definitions/api.DesignateInfo'
+        type: array
+      fee_amount:
+        description: Amount of the fee
+        type: integer
+      fee_hash:
+        description: Hash of the fee parameters
+        type: string
+      funding_txs:
+        description: List of funding transactions
+        items:
+          $ref: '#/definitions/api.FundingTxInfo'
+        type: array
+      genesis_confirmed:
+        description: Whether the genesis transaction is confirmed
+        type: boolean
+      genesis_erg:
+        description: Initial ERG amount in the contract
+        type: integer
+      genesis_tx:
+        description: Transaction ID of the genesis transaction
+        type: string
+      key:
+        allOf:
+        - $ref: '#/definitions/api.KeyInfo'
+        description: Optional key information
+      mint_txs:
+        description: List of mint transactions
+        items:
+          $ref: '#/definitions/api.MintTxInfo'
+        type: array
+      name:
+        description: Optional name of the contract
+        type: string
+      oracle_is_greater_than:
+        description: Optional flag indicating if oracle comparison should be greater
+          than
+        type: boolean
+      oracle_nft:
+        description: Optional oracle NFT token ID
+        type: string
+      oracle_value:
+        description: Optional oracle value to compare against
+        type: integer
+      redeem_txs:
+        description: List of redeem transactions
+        items:
+          $ref: '#/definitions/api.RedeemTxInfo'
+        type: array
+      singleton:
+        description: Unique identifier of the contract
+        type: string
+      value:
+        allOf:
+        - $ref: '#/definitions/api.ContractValue'
+        description: Current value of the contract including ERG and tokens
+    type: object
+  api.ContractValue:
+    description: Current value of the contract including ERG and tokens
+    properties:
+      erg:
+        description: ERG value information
+        properties:
+          confirmed:
+            description: Confirmed ERG amount
+            type: integer
+          unconfirmed:
+            description: Unconfirmed ERG amount
+            type: integer
+        type: object
+      tokens:
+        description: Token value information
+        properties:
+          confirmed:
+            additionalProperties:
+              $ref: '#/definitions/api.TokenBalance'
+            description: Map of confirmed token balances
+            type: object
+          unconfirmed:
+            additionalProperties:
+              $ref: '#/definitions/api.TokenBalance'
+            description: Map of unconfirmed token balances
+            type: object
+        type: object
+    type: object
+  api.DesignateInfo:
+    description: Designate address information with block height
+    properties:
+      address:
+        description: Ergo address of the designate
+        type: string
+      block_height:
+        description: Block height when the designate was added
+        type: integer
+    type: object
+  api.FundingTxInfo:
+    description: Funding transaction information
+    properties:
+      block_height:
+        description: Block height of the transaction
+        type: integer
+      erg_delta:
+        description: Change in ERG amount
+        type: integer
+      tx:
+        description: Transaction ID
+        type: string
+    type: object
+  api.KeyInfo:
+    description: Key information including ID and amount
+    properties:
+      amount:
+        description: Amount associated with the key
+        type: integer
+      id:
+        description: Unique identifier of the key
+        type: string
+    type: object
+  api.MintTxInfo:
+    description: Mint transaction information
+    properties:
+      block_height:
+        description: Block height of the transaction
+        type: integer
+      confirmed:
+        description: Whether the transaction is confirmed
+        type: boolean
+      tx:
+        description: Transaction ID
+        type: string
+    type: object
+  api.ReadinessResponse:
+    properties:
+      message:
+        type: string
+      ready:
+        type: boolean
+    type: object
+  api.RedeemTxInfo:
+    description: Redeem transaction information
+    properties:
+      block_height:
+        description: Block height of the transaction
+        type: integer
+      confirmed:
+        description: Whether the transaction is confirmed
+        type: boolean
+      recipient_address:
+        description: Address receiving the redeemed assets
+        type: string
+      tx:
+        description: Transaction ID
+        type: string
+      type:
+        allOf:
+        - $ref: '#/definitions/api.RedeemType'
+        description: Type of redemption
+    type: object
+  api.RedeemType:
+    description: Type of redemption (deadline_reached, oracle_redeem, or designate_redeem)
+    enum:
+    - deadline_reached
+    - oracle_redeem
+    - designate_redeem
+    type: string
+    x-enum-varnames:
+    - RedeemTypeDeadlineReached
+    - RedeemTypeOracleRedeem
+    - RedeemTypeDesignateRedeem
+  api.TokenBalance:
+    description: Token balance information
+    properties:
+      amount:
+        description: Token amount
+        type: integer
+      tokenId:
+        description: Token identifier
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Token balance information
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: SigmaLok Indexer API
+  version: 1.0.0
+paths:
+  /contracts:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all contracts with pagination support
+      parameters:
+      - description: Number of contracts to return (default 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of contracts to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of contracts successfully retrieved
+          schema:
+            items:
+              $ref: '#/definitions/api.ContractResponse'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get All Contracts
+      tags:
+      - contracts
+  /contracts/{singleton}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a contract and its associated data by singleton identifier
+      parameters:
+      - description: Singleton identifier of the contract
+        in: path
+        name: singleton
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Contract details successfully retrieved
+          schema:
+            $ref: '#/definitions/api.ContractResponse'
+        "404":
+          description: Contract not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Contract by Singleton
+      tags:
+      - contracts
+  /contracts/benefactor/{benefactor}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all contracts where the specified address is the benefactor
+        with pagination support
+      parameters:
+      - description: Benefactor's Ergo address
+        in: path
+        name: benefactor
+        required: true
+        type: string
+      - description: Number of contracts to return (default 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of contracts to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of contracts successfully retrieved
+          schema:
+            items:
+              $ref: '#/definitions/api.ContractResponse'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Contracts by Benefactor
+      tags:
+      - contracts
+  /contracts/creator/{creator}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all contracts created by a specific address with pagination
+        support
+      parameters:
+      - description: Creator's Ergo address
+        in: path
+        name: creator
+        required: true
+        type: string
+      - description: Number of contracts to return (default 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of contracts to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of contracts successfully retrieved
+          schema:
+            items:
+              $ref: '#/definitions/api.ContractResponse'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Contracts by Creator
+      tags:
+      - contracts
+  /contracts/deadline/{deadline}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all contracts with deadline before or after the specified
+        block height
+      parameters:
+      - description: Block height deadline
+        in: path
+        name: deadline
+        required: true
+        type: integer
+      - description: If true, returns contracts after deadline instead (default false)
+        in: query
+        name: after
+        type: boolean
+      - description: Number of contracts to return (default 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of contracts to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of contracts successfully retrieved
+          schema:
+            items:
+              $ref: '#/definitions/api.ContractResponse'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Contracts by Deadline
+      tags:
+      - contracts
+  /contracts/designates:
+    post:
+      consumes:
+      - application/json
+      description: Retrieves all contracts that have any of the specified designate
+        addresses
+      parameters:
+      - description: List of designate addresses to search for
+        in: body
+        name: request
+        required: true
+        schema:
+          description: Request body for searching contracts by designate addresses
+          items:
+            type: string
+          type: array
+      - description: Number of contracts to return (default 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of contracts to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of contracts successfully retrieved
+          schema:
+            items:
+              $ref: '#/definitions/api.ContractResponse'
+            type: array
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Contracts by Designate Addresses
+      tags:
+      - contracts
+  /contracts/keys:
+    post:
+      consumes:
+      - application/json
+      description: Retrieves all contracts that have any of the specified keys
+      parameters:
+      - description: List of key IDs to search for
+        in: body
+        name: request
+        required: true
+        schema:
+          description: Request body for searching contracts by keys
+          items:
+            type: string
+          type: array
+      - description: Number of contracts to return (default 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of contracts to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of contracts successfully retrieved
+          schema:
+            items:
+              $ref: '#/definitions/api.ContractResponse'
+            type: array
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Contracts by Keys
+      tags:
+      - contracts
+  /healthcheck:
+    get:
+      description: Returns 200 only when all readers are alive, lastProcessedHeight+cfg.AllowedLag
+        ≥ tipHeight, and pendingDownstream < cfg.AllowedBuffer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Service is ready
+          schema:
+            $ref: '#/definitions/api.ReadinessResponse'
+        "503":
+          description: Service is not ready
+          schema:
+            $ref: '#/definitions/api.ReadinessResponse'
+      summary: Health Check
+      tags:
+      - system
+  /statistics:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves global statistics about contracts and locked assets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Statistics successfully retrieved
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Global Statistics
+      tags:
+      - statistics
+  /statistics/claimable-erg/{height}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the total amount of ERG that will be claimable after
+        a specific block height
+      parameters:
+      - description: Block height to check claimable ERG
+        in: path
+        name: height
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Total claimable ERG successfully retrieved
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Total Claimable ERG
+      tags:
+      - statistics
+schemes:
+- http
+- https
+swagger: "2.0"
+tags:
+- description: Contract Queries
+  name: contracts
+- description: Global statistics and metrics about contracts and locked assets
+  name: statistics
+- description: System status and health monitoring endpoints
+  name: system

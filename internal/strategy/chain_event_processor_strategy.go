@@ -534,7 +534,7 @@ func (s *ChainEventProcessorActor) processTransactionUnappliedEvent(
 func (s *ChainEventProcessorActor) processMempoolAcceptedEvent(
 	mempoolEvent types.IndexerMempoolAcceptedEvent,
 ) error {
-	s.logger.Infow("processing mempool accepted event",
+	s.logger.Debugw("processing mempool accepted event",
 		"strategy_id", s.config.ID)
 
 	// Use the pre-decoded transaction from the event
@@ -549,15 +549,6 @@ func (s *ChainEventProcessorActor) processMempoolAcceptedEvent(
 			"no parsed transaction available in mempool accepted event",
 		)
 	}
-
-	// Log transaction hash and details
-	s.logger.Infow("decoded mempool accepted transaction",
-		"tx_hash", tx.ID,
-		"event_type", "accepted",
-		"strategy_id", s.config.ID,
-		"inputs_count", len(tx.Inputs),
-		"outputs_count", len(tx.Outputs),
-		"data_inputs_count", len(tx.DataInputs))
 
 	// Check if this is a SigmaLok transaction
 	isSigmaLokTransaction := false

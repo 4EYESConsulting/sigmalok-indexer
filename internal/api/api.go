@@ -19,7 +19,6 @@ import (
 	scalargo "github.com/bdpiprava/scalar-go"
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
-	"github.com/penglongli/gin-metrics/ginmetrics"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sigmaspace-io/ergo-lib-go"
 )
@@ -849,36 +848,6 @@ func parseIntWithDefault(s string, def int) int {
 func parseUint64(s string) uint64 {
 	v, _ := strconv.ParseUint(s, 10, 64)
 	return v
-}
-
-func setupMetrics(mainRouter *gin.Engine) *gin.Engine {
-	metricsRouter := gin.New()
-	metrics := ginmetrics.GetMonitor()
-
-	// Configure metrics
-	metrics.SetMetricPath("/")
-	metrics.Expose(metricsRouter)
-	metrics.UseWithoutExposingEndpoint(mainRouter)
-
-	// Add custom metrics
-	customMetrics := []ginmetrics.Metric{
-		{
-			Type:        ginmetrics.Counter,
-			Name:        "api_requests_total",
-			Description: "Total number of API requests",
-		},
-		{
-			Type:        ginmetrics.Counter,
-			Name:        "api_errors_total",
-			Description: "Total number of API errors",
-		},
-	}
-
-	for _, metric := range customMetrics {
-		_ = metrics.AddMetric(&metric)
-	}
-
-	return metricsRouter
 }
 
 type ReadinessResponse struct {

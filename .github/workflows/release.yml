@@ -53,17 +53,17 @@ jobs:
           mkdir -p dist
 
           # Build for Linux
-          GOOS=linux GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-linux-amd64 ./cmd/${{ env.APPLICATION_NAME }}
+          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-linux-amd64 ./cmd/${{ env.APPLICATION_NAME }}
           chmod +x dist/${{ env.APPLICATION_NAME }}-linux-amd64
           tar czf dist/${{ env.APPLICATION_NAME }}_${VERSION}_linux_amd64.tar.gz -C dist ${{ env.APPLICATION_NAME }}-linux-amd64
 
           # Build for macOS
-          GOOS=darwin GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-darwin-amd64 ./cmd/${{ env.APPLICATION_NAME }}
+          CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-darwin-amd64 ./cmd/${{ env.APPLICATION_NAME }}
           chmod +x dist/${{ env.APPLICATION_NAME }}-darwin-amd64
           tar czf dist/${{ env.APPLICATION_NAME }}_${VERSION}_darwin_amd64.tar.gz -C dist ${{ env.APPLICATION_NAME }}-darwin-amd64
 
           # Build for Windows
-          GOOS=windows GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-windows-amd64.exe ./cmd/${{ env.APPLICATION_NAME }}
+          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-windows-amd64.exe ./cmd/${{ env.APPLICATION_NAME }}
           zip dist/${{ env.APPLICATION_NAME }}_${VERSION}_windows_amd64.zip dist/${{ env.APPLICATION_NAME }}-windows-amd64.exe
 
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
@@ -76,17 +76,17 @@ jobs:
           mkdir -p dist
 
           # Build for Linux
-          GOOS=linux GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-linux-amd64 ./cmd/${{ env.APPLICATION_NAME }}
+          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-linux-amd64 ./cmd/${{ env.APPLICATION_NAME }}
           chmod +x dist/${{ env.APPLICATION_NAME }}-linux-amd64
           tar czf dist/${{ env.APPLICATION_NAME }}_${VERSION}_linux_amd64.tar.gz -C dist ${{ env.APPLICATION_NAME }}-linux-amd64
 
           # Build for macOS
-          GOOS=darwin GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-darwin-amd64 ./cmd/${{ env.APPLICATION_NAME }}
+          CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-darwin-amd64 ./cmd/${{ env.APPLICATION_NAME }}
           chmod +x dist/${{ env.APPLICATION_NAME }}-darwin-amd64
           tar czf dist/${{ env.APPLICATION_NAME }}_${VERSION}_darwin_amd64.tar.gz -C dist ${{ env.APPLICATION_NAME }}-darwin-amd64
 
           # Build for Windows
-          GOOS=windows GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-windows-amd64.exe ./cmd/${{ env.APPLICATION_NAME }}
+          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -o dist/${{ env.APPLICATION_NAME }}-windows-amd64.exe ./cmd/${{ env.APPLICATION_NAME }}
           zip dist/${{ env.APPLICATION_NAME }}_${VERSION}_windows_amd64.zip dist/${{ env.APPLICATION_NAME }}-windows-amd64.exe
 
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT

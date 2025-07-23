@@ -16,7 +16,7 @@ permissions:
 
 env:
   APPLICATION_NAME: indexer
-  GO_VERSION: 1.24
+  GO_VERSION: "1.24.0"
 
 jobs:
   build:

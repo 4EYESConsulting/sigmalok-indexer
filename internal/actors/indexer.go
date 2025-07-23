@@ -1183,6 +1183,8 @@ func (a *IndexerActor) tryAdvanceCursor() {
 			"cursor advanced",
 			"height",
 			nextHeight,
+			"last_processed_height",
+			a.lastProcessedHeight,
 			"reason",
 			func() string {
 				if st.rollback {

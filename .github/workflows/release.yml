@@ -1,20 +1,22 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - "v*.*.*"
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**/*.md"
 
+  push:
+    branches: [main]
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+  packages: write
+
 env:
   APPLICATION_NAME: indexer
-  GO_VERSION: "1.24.0"
+  GO_VERSION: 1.24
 
 jobs:
   build:

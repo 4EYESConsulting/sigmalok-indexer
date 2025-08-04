@@ -23,7 +23,7 @@ require (
 	github.com/segmentio/kafka-go v0.4.48
 	github.com/sigmaspace-io/ergo-lib-go v0.26.1-0.20241115225441-223b24b0cb75
 	github.com/sirupsen/logrus v1.9.3
-	github.com/swaggo/swag v1.16.5
+	github.com/swaggo/swag v1.16.6
 	go.uber.org/automaxprocs v1.6.0
 	go.uber.org/zap v1.27.0
 	gopkg.in/yaml.v2 v2.4.0

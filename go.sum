@@ -10,8 +10,8 @@ github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 h1:d+Bc7a5rLufV
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
 github.com/anthdm/hollywood v1.0.5 h1:SuCTVRRFqx0MZ4E0RijHl4+Xt56PF0C7aqYKguBU6j8=
 github.com/anthdm/hollywood v1.0.5/go.mod h1:wU4WxIRVs++E2PuiVXc8dA2An/Wlom4AhzwQ7e3tDzI=
-github.com/bdpiprava/scalar-go v0.12.0 h1:teqmX3tUJ+pCn4p5fq6pdF9H4DxmRqyyN/7KcRYmXpg=
-github.com/bdpiprava/scalar-go v0.12.0/go.mod h1:r7rPGj0cXN79s7nZuH42DkwVdBBq8V6rkQfk8VCYEgQ=
+github.com/bdpiprava/scalar-go v0.12.1 h1:hgLUv1B81epYBO3neJvzmqZfsco72VRrqA0Yy62iqyk=
+github.com/bdpiprava/scalar-go v0.12.1/go.mod h1:e5Nn4yIhcYjlucu4ACMqcs410nIAe5whqj78H3Qv7vw=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/bytedance/sonic v1.13.2 h1:8/H1FempDZqC4VqjptGo14QQlJx8VdZJegxs6wwfqpQ=

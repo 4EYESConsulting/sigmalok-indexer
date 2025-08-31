@@ -612,6 +612,7 @@ func handleGetAllContracts(c *gin.Context) {
 //	@Router			/statistics [get]
 func handleGetStatistics(c *gin.Context) {
 	db := c.MustGet("db").(*database.Database)
+	status := c.MustGet("indexer_status").(IndexerStatus)
 
 	totalContracts, err := db.GetTotalContractCount()
 	if err != nil {
@@ -637,11 +638,18 @@ func handleGetStatistics(c *gin.Context) {
 		return
 	}
 
+	totalAvailableErg, err := db.GetTotalClaimableErgAfterHeight(status.TipHeight)
+	if err != nil {
+		ServerError(c, fmt.Errorf("failed to get total available ERG: %w", err))
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"total_contracts":     totalContracts,
 		"total_locked_erg":    totalLockedErg,
 		"total_unique_tokens": totalUniqueTokens,
 		"total_redeems":       totalRedeems,
+		"total_available_erg": totalAvailableErg,
 	})
 }
 

@@ -20,6 +20,11 @@ indexer:
   allowedLag: 0
   allowedBuffer: 0
 
+healthCheck:
+  checkInterval: 30s
+  maxFailures: 3
+  alertCooldown: 5m
+
 server:
   listenAddress: "0.0.0.0"
   listenPort: 8080

@@ -10,15 +10,16 @@ import (
 )
 
 type Config struct {
-	Storage  StorageConfig  `yaml:"storage"`
-	Indexer  IndexerConfig  `yaml:"indexer"`
-	API      APIConfig      `yaml:"api"`
-	Logging  Logging        `yaml:"logging"`
-	Server   ServerConfig   `yaml:"server"`
-	Kafka    KafkaConfig    `yaml:"kafka"`
-	Contract ContractConfig `yaml:"contract"`
-	Profile  string         `yaml:"profile"  envconfig:"PROFILE"`
-	Network  string         `yaml:"network"  envconfig:"NETWORK"`
+	Storage     StorageConfig     `yaml:"storage"`
+	Indexer     IndexerConfig     `yaml:"indexer"`
+	API         APIConfig         `yaml:"api"`
+	Logging     Logging           `yaml:"logging"`
+	Server      ServerConfig      `yaml:"server"`
+	Kafka       KafkaConfig       `yaml:"kafka"`
+	Contract    ContractConfig    `yaml:"contract"`
+	HealthCheck HealthCheckConfig `yaml:"healthCheck"`
+	Profile     string            `yaml:"profile"     envconfig:"PROFILE"`
+	Network     string            `yaml:"network"     envconfig:"NETWORK"`
 }
 
 type IndexerConfig struct {
@@ -73,6 +74,12 @@ type KafkaConfig struct {
 
 type ContractConfig struct {
 	Ergotree string `yaml:"ergotree"`
+}
+
+type HealthCheckConfig struct {
+	CheckInterval time.Duration `yaml:"checkInterval" envconfig:"HEALTH_CHECK_INTERVAL"`
+	MaxFailures   int           `yaml:"maxFailures"   envconfig:"HEALTH_CHECK_MAX_FAILURES"`
+	AlertCooldown time.Duration `yaml:"alertCooldown" envconfig:"HEALTH_CHECK_ALERT_COOLDOWN"`
 }
 
 var globalConfig = &Config{}
@@ -151,6 +158,17 @@ func (c *Config) setDefaults() {
 	}
 	if len(c.Kafka.Brokers) == 0 {
 		c.Kafka.Brokers = []string{"localhost:19091"}
+	}
+
+	// Health check defaults
+	if c.HealthCheck.CheckInterval == 0 {
+		c.HealthCheck.CheckInterval = 30 // 30 seconds
+	}
+	if c.HealthCheck.MaxFailures == 0 {
+		c.HealthCheck.MaxFailures = 3
+	}
+	if c.HealthCheck.AlertCooldown == 0 {
+		c.HealthCheck.AlertCooldown = 5 // 5 minutes
 	}
 }
 

@@ -181,6 +181,17 @@ func main() {
 	)
 	logger.Debug("api strategy loaded")
 
+	// Load health check strategy
+	healthCheckCfg := types.StrategyConfig{
+		ID:   "health-check",
+		Kind: "health-check",
+	}
+	engine.Send(
+		strategyManagerPID,
+		actors.LoadStrategyCommand{Config: healthCheckCfg},
+	)
+	logger.Debug("health check strategy loaded")
+
 	logger.Infof("offchain indexer started successfully on %s", cfg.Network)
 
 	sigCh := make(chan os.Signal, 1)

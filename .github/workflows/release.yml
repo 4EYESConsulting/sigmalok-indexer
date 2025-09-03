@@ -39,7 +39,7 @@ jobs:
     container:
       image: ${{ matrix.image }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build ${{ matrix.goos }}-${{ matrix.goarch }}
         env:

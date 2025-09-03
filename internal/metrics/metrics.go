@@ -123,6 +123,53 @@ var (
 		Name: "indexer_decode_failures_total",
 		Help: "Total number of message decode failures",
 	}, []string{"topic", "type"})
+
+	// Node health check metrics
+	MetricNodeHealthStatus = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "indexer_node_health_status",
+		Help: "Current node health status (1 = healthy, 0 = unhealthy)",
+	})
+
+	MetricNodeHealthResponseTime = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "indexer_node_health_response_time_ms",
+		Help: "Node health check response time in milliseconds",
+	})
+
+	MetricNodeHealthConsecutiveFailures = promauto.NewGauge(
+		prometheus.GaugeOpts{
+			Name: "indexer_node_health_consecutive_failures",
+			Help: "Number of consecutive health check failures",
+		},
+	)
+
+	MetricNodeHealthHeight = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "indexer_node_health_height",
+		Help: "Node height reported during health checks",
+	})
+
+	MetricNodeHealthCriticalFailures = promauto.NewCounter(
+		prometheus.CounterOpts{
+			Name: "indexer_node_health_critical_failures_total",
+			Help: "Total number of critical node health failures",
+		},
+	)
+
+	MetricNodeHealthRecoveries = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "indexer_node_health_recoveries_total",
+		Help: "Total number of node health recoveries",
+	})
+
+	MetricNodeHeightStagnationEvents = promauto.NewCounter(
+		prometheus.CounterOpts{
+			Name: "indexer_node_height_stagnation_total",
+			Help: "Total number of node height stagnation events (no height increase within threshold)",
+		},
+	)
+
+	MetricNodeHeightStagnationDuration = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "indexer_node_height_stagnation_duration_seconds",
+		Help: "Current duration of node height stagnation in seconds",
+	})
 )
 
 // Helper functions for common metric operations
@@ -201,4 +248,50 @@ func RecordReaderRestart(topic string) {
 // RecordDecodeFailure increments the decode failure counter
 func RecordDecodeFailure(topic, msgType string) {
 	MetricDecodeFailures.WithLabelValues(topic, msgType).Inc()
+}
+
+// Node health check helper functions
+
+// UpdateNodeHealthStatus updates the node health status metric
+func UpdateNodeHealthStatus(isHealthy bool) {
+	if isHealthy {
+		MetricNodeHealthStatus.Set(1)
+	} else {
+		MetricNodeHealthStatus.Set(0)
+	}
+}
+
+// UpdateNodeHealthResponseTime updates the response time metric
+func UpdateNodeHealthResponseTime(responseTimeMs int64) {
+	MetricNodeHealthResponseTime.Set(float64(responseTimeMs))
+}
+
+// UpdateNodeHealthConsecutiveFailures updates the consecutive failures metric
+func UpdateNodeHealthConsecutiveFailures(failures int) {
+	MetricNodeHealthConsecutiveFailures.Set(float64(failures))
+}
+
+// UpdateNodeHealthHeight updates the node height metric
+func UpdateNodeHealthHeight(height uint64) {
+	MetricNodeHealthHeight.Set(float64(height))
+}
+
+// RecordNodeHealthCriticalFailure increments the critical failures counter
+func RecordNodeHealthCriticalFailure() {
+	MetricNodeHealthCriticalFailures.Inc()
+}
+
+// RecordNodeHealthRecovery increments the recoveries counter
+func RecordNodeHealthRecovery() {
+	MetricNodeHealthRecoveries.Inc()
+}
+
+// RecordNodeHeightStagnation increments the height stagnation counter
+func RecordNodeHeightStagnation() {
+	MetricNodeHeightStagnationEvents.Inc()
+}
+
+// UpdateNodeHeightStagnationDuration updates the height stagnation duration metric
+func UpdateNodeHeightStagnationDuration(durationSeconds int64) {
+	MetricNodeHeightStagnationDuration.Set(float64(durationSeconds))
 }

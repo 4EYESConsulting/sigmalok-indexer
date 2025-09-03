@@ -6,7 +6,7 @@ toolchain go1.24.3
 
 require (
 	github.com/anthdm/hollywood v1.0.5
-	github.com/bdpiprava/scalar-go v0.12.0
+	github.com/bdpiprava/scalar-go v0.12.1
 	github.com/disgoorg/disgo v0.18.16
 	github.com/disgoorg/dislog v1.1.0
 	github.com/disgoorg/snowflake/v2 v2.0.3

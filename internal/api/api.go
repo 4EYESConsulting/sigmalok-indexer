@@ -638,7 +638,9 @@ func handleGetStatistics(c *gin.Context) {
 		return
 	}
 
-	totalAvailableErg, err := db.GetTotalClaimableErgAfterHeight(status.TipHeight)
+	totalAvailableErg, err := db.GetTotalClaimableErgAfterHeight(
+		status.TipHeight,
+	)
 	if err != nil {
 		ServerError(c, fmt.Errorf("failed to get total available ERG: %w", err))
 		return

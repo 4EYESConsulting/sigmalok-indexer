@@ -20,7 +20,7 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/prometheus/client_golang v1.22.0
 	github.com/schollz/progressbar/v3 v3.18.0
-	github.com/segmentio/kafka-go v0.4.48
+	github.com/segmentio/kafka-go v0.4.49
 	github.com/sigmaspace-io/ergo-lib-go v0.26.1-0.20241115225441-223b24b0cb75
 	github.com/sirupsen/logrus v1.9.3
 	github.com/swaggo/swag v1.16.6

@@ -40,6 +40,15 @@ func NewStrategyRegistry() *StrategyRegistry {
 		) // indexerPID will be set by the strategy manager
 	}
 
+	registry.factories["health-check"] = func(cfg types.StrategyConfig, appCfg *config.Config, db *database.Database, nodeProvider node.NodeProvider) actor.Producer {
+		return strategy.NewHealthCheckStrategy(
+			cfg,
+			appCfg,
+			db,
+			nodeProvider,
+		)
+	}
+
 	return registry
 }
 

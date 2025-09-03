@@ -16,7 +16,7 @@ import (
 const (
 	expectedR4 = "SGroupElement"
 	expectedR5 = "STuple([SColl(SByte), SLong])"
-	expectedR6 = "STuple([SLong, SLong])"
+	expectedR6 = "STuple([SInt, SLong])"
 	expectedR7 = "SColl(SGroupElement)"
 	expectedR8 = "STuple([SColl(SByte), SBoolean])"
 	expectedR9 = "STuple([SColl(SColl(SByte)), SLong])"

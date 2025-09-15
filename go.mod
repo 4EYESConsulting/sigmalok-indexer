@@ -27,7 +27,7 @@ require (
 	go.uber.org/automaxprocs v1.6.0
 	go.uber.org/zap v1.27.0
 	gopkg.in/yaml.v2 v2.4.0
-	gorm.io/gorm v1.30.3
+	gorm.io/gorm v1.31.0
 )
 
 require (

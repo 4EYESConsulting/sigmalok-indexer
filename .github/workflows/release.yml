@@ -51,7 +51,7 @@ jobs:
           if [ "${{ matrix.goos }}" = "windows" ]; then BIN=$BIN.exe; fi
           mv $BIN dist/${{ matrix.goos }}-${{ matrix.goarch }}/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.goos }}-${{ matrix.goarch }}
           path: dist/${{ matrix.goos }}-${{ matrix.goarch }}
